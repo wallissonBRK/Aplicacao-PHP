@@ -1,11 +1,16 @@
 <?php
 
+$hostname = "127.0.0.1";
+$bancodedados = "clientes";
+$usuario = "root";
+$senha = "";
+
 $login = $_POST['login'];
 $senha = MD5($_POST['senha']);
-$connect = mysql_connect('127.0.0.1','root','');
-$db = mysql_select_db('clientes');
+$connect = mysqli_connect($hostname, $usuario, $senha);
+$db = mysqli_select_db($bancodedados, $connect) or die('Erro na seleção do banco');
 $query_select = "SELECT login FROM usuarios WHERE login = '$login'";
-$select = mysql_query($query_select,$connect);
+$select = mysqli_query($query_select,$connect);
 $array = mysqli_fetch_array($select);
 $logarray = $array['login'];
 
@@ -24,7 +29,7 @@ $logarray = $array['login'];
 
       }else{
         $query = "INSERT INTO usuarios (login,senha) VALUES ('$login','$senha')";
-        $insert = mysql_query($query,$connect);
+        $insert = mysqli_query($query,$connect);
 
         if($insert){
           echo"<script language='javascript' type='text/javascript'>
